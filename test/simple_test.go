@@ -1,9 +1,8 @@
 package test
 
 import (
-	"testing"
-
 	"os"
+	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/azure"
 	"github.com/gruntwork-io/terratest/modules/terraform"
@@ -17,7 +16,6 @@ func TestSimpleTerraform(t *testing.T) {
 			"../envs/dev/variables.tfvars",
 		},
 	}
-	defer terraform.Destroy(t, terraformOptions)
 
 	terraform.InitAndApply(t, terraformOptions)
 
@@ -31,8 +29,12 @@ func TestSimpleTerraform(t *testing.T) {
 		assert.Equal(t, "australiaeast", test2_output)
 	})
 
-	resourceGroupName := terraform.Output(t, terraformOptions, "resource_group_name")
-	subscriptionId := os.Getenv("ARM_SUBSCRIPTION_ID")
-	exists := azure.ResourceGroupExists(t, resourceGroupName, subscriptionId)
-	assert.True(t, exists, "Resource group does not exist")
+	t.Run("Resource Group Exists", func(t *testing.T) {
+		resourceGroupName := terraform.Output(t, terraformOptions, "resource_group_name")
+		subscriptionId := os.Getenv("ARM_SUBSCRIPTION_ID")
+		exists := azure.ResourceGroupExists(t, resourceGroupName, subscriptionId)
+		assert.True(t, exists, "Resource group does not exist")
+	})
+
+	defer terraform.Destroy(t, terraformOptions)
 }
