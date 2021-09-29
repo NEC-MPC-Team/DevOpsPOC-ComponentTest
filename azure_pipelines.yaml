@@ -19,6 +19,8 @@ steps:
   inputs:
     terraformVersion: '0.12.3'
 
+
+
 - task: AzureCLI@2
   displayName: Azure CLI
   inputs:
@@ -29,6 +31,7 @@ steps:
       az login --service-principal -u $(ARM_CLIENT_ID) -p $(ARM_CLIENT_SECRET) --tenant $(ARM_TENANT_ID)
 
 - bash: |
+    az login --service-principal -u $(ARM_CLIENT_ID) -p $(ARM_CLIENT_SECRET) --tenant $(ARM_TENANT_ID)
     cd test
     go mod init necdemo
     go test -v
