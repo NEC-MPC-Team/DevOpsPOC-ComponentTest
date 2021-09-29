@@ -1,0 +1,25 @@
+trigger: 
+ - main
+
+variables:
+ - group: terraform-app-registration
+
+pool:
+   vmImage: 'ubuntu-latest'
+
+steps: 
+- task: GoTool@0
+  displayName: "Install Go tooling"
+  inputs:
+    version: '1.13.5'
+
+- task: TerraformInstaller@0
+  displayName: "Install Terraform tooling"
+  inputs:
+    terraformVersion: '0.12.3'
+
+- bash: |
+    cd test
+    go mod init necdemo
+    go test -v
+  displayName: "Run the tests"  
