@@ -34,5 +34,6 @@ steps:
     az login --service-principal -u $(ARM_CLIENT_ID) -p $(ARM_CLIENT_SECRET) --tenant $(ARM_TENANT_ID)
     cd test
     go mod init necdemo
-    go test -v
+    go test -v | tee test_output.log
+    terratest_log_parser -testlog test_output.log -outputdir test_output
   displayName: "Run the tests"  
