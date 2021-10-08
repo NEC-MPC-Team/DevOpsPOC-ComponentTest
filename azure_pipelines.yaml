@@ -46,5 +46,5 @@ steps:
 - task: PublishTestResults@2
   inputs:
     testResultsFormat: 'JUnit'
-    testResultsFiles: '**/TEST-*.xml'
+    testResultsFiles: '/home/vsts/work/1/s/test/test_output/report.xml'
     failTaskOnFailedTests: true
