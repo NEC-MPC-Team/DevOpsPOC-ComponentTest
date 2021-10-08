@@ -37,8 +37,10 @@ steps:
     az login --service-principal -u $(ARM_CLIENT_ID) -p $(ARM_CLIENT_SECRET) --tenant $(ARM_TENANT_ID)
     cd test
     go mod init necdemo
-    go test -v | tee test_output1.log
-    terratest_log_parser -testlog test_output1.log -outputdir test_output
+    go test -v | tee test_output.log
+    terratest_log_parser -testlog test_output.log -outputdir test_output
+    ls /home/vsts/work/1/s/test/test_output
+    ls /home/vsts/work/1/s/test/test_output/TestSimpleTerraform
   displayName: "Run the tests"  
 
 - task: PublishTestResults@2
