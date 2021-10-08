@@ -40,3 +40,9 @@ steps:
     go test -v | tee test_output.log
     terratest_log_parser -testlog test_output.log -outputdir test_output
   displayName: "Run the tests"  
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: '**/TEST-*.xml'
+    failTaskOnFailedTests: true
